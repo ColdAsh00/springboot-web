@@ -42,6 +42,7 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
+    // 게시글 검색 기능
     public Page<Board> boardSearchList(String searchKeyword, Pageable pageable) {
 
         return boardRepository.findByTitleContaining(searchKeyword, pageable);

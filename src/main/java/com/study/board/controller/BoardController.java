@@ -20,6 +20,12 @@ public class BoardController {
     @Autowired // 자동 객체 생성
     private BoardService boardService;
 
+    @GetMapping("/")
+    public String boardMain() {
+
+        return "boardmain";
+    }
+
     @GetMapping("/board/write") //localhost:8080/board/write
     public String boardWriterForm() {
 
@@ -63,9 +69,14 @@ public class BoardController {
     }
 
     @GetMapping("/board/view") // localhost:8080/board/view?id=1
-    public String boardView(Model model, Integer id) {
+    public String boardView(Model model, Integer id, Board board) {
+
+        model.addAttribute("newLineChar", '\n');
+
+        model.addAttribute("contents",boardService.boardView(id).getContent());
 
         model.addAttribute("board", boardService.boardView(id));
+
         return "boardview";
     }
 
