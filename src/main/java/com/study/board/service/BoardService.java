@@ -20,20 +20,26 @@ public class BoardService {
     // 글 작성 처리
     public void write(Board board, MultipartFile file) throws Exception {
 
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        if(file.isEmpty()){
+            // 게시판 작성
+            boardRepository.save(board);
+        } else {
+            // 파일 업로드, static 페이지 생성
+            String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
-        UUID uuid = UUID.randomUUID();
+            UUID uuid = UUID.randomUUID();
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
+            String fileName = uuid + "_" + file.getOriginalFilename();
 
-        File saveFile = new File(projectPath, fileName);
+            File saveFile = new File(projectPath, fileName);
 
-        file.transferTo(saveFile);
+            file.transferTo(saveFile);
 
-        board.setFilename(fileName);
-        board.setFilepath("/files/" + fileName);
+            board.setFilename(fileName);
+            board.setFilepath("/files/" + fileName);
 
-        boardRepository.save(board);
+            boardRepository.save(board);
+        }
     }
 
     // 게시글 리스트 처리

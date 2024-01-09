@@ -33,15 +33,26 @@ public class BoardController {
     }
 
     @PostMapping("/board/writepro")
-    public String boardWritePro(Board board, Model model, MultipartFile file) throws Exception {
+    public String boardWritePro(Board board, Model model, MultipartFile file, String title) throws Exception {
 
-        boardService.write(board, file);
+        // 제목 빈칸이면 글 작성 실패
+        if (title.isEmpty()) {
+            model.addAttribute("message", "제목을 작성해 주세요.");
+            model.addAttribute("searchUrl", "/board/write");
 
-        model.addAttribute("message", "글 작성이 완료되었습니다.");
-        model.addAttribute("searchUrl", "/board/list");
+            return "message";
 
-        return "message";
+        } else { // 제목 빈칸 아니면 정상 작동
+            boardService.write(board, file);
+
+            model.addAttribute("message", "글 작성이 완료되었습니다.");
+            model.addAttribute("searchUrl", "/board/list");
+
+            return "message";
+        }
     }
+
+
 
     @GetMapping("/board/list")
     public String boardList(Model model,
