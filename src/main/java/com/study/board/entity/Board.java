@@ -1,11 +1,13 @@
 package com.study.board.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
+
+@EntityListeners(AuditingEntityListener.class) // CreatedDate 사용하기 위해 추가
 @Entity // Entity는 db에 있는 테이블을 의미
 @Data
 public class Board {
@@ -21,4 +23,7 @@ public class Board {
     private String filename;
 
     private String filepath;
+
+    @CreatedDate
+    private LocalDateTime updatedDatetime;
 }
