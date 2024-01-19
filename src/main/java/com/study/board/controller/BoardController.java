@@ -82,7 +82,7 @@ public class BoardController {
     @GetMapping("/board/view") // localhost:8080/board/view?id=1
     public String boardView(Model model, Integer id, Board board) {
 
-        model.addAttribute("newLineChar", '\n');
+        model.addAttribute("newLineChar", '\n'); // 게시글 엔터 출력 구현
 
         model.addAttribute("contents",boardService.boardView(id).getContent());
 

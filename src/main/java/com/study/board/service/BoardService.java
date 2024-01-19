@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -57,7 +58,16 @@ public class BoardService {
     // 특정 게시글 불러오기
     public Board boardView(Integer id) {
 
-        return boardRepository.findById(id).get();
+        Optional<Board> newBoard = this.boardRepository.findById(id);
+
+        if (newBoard.isPresent()) {
+            Board board_view = newBoard.get();
+            board_view.setView(board_view.getView() + 1);
+            this.boardRepository.save(board_view);
+            return board_view;
+        } else {
+            return boardRepository.findById(id).get(); // 기존 방법, 조회수 증가 x 버전
+        }
     }
 
     // 특정 게시글 삭제

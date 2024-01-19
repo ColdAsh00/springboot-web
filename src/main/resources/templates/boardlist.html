@@ -51,18 +51,21 @@
                     <tr>
                         <th scope="col">글번호</th>
                         <th scope="col">제목</th>
-                        <th scope="col">날짜</th>
+                        <th scope="col">작성일</th>
                         <th scope="col">조회수</th>
                     </tr>
                 </thead>
                     <tbody>
                         <tr th:each="board : ${list}">
-                            <td th:text="${board.id}">1</td>
+                            <td th:text="${board.id}"></td>
                             <td>
                                 <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
                             </td>
                             <td>
                                 <a th:text="${#temporals.format(board.updatedDatetime, 'yyyy-MM-dd HH:mm:ss')}"></a>
+                            </td>
+                            <td>
+                                <a th:text="${board.view}"></a>
                             </td>
                         </tr>
                     </tbody>
